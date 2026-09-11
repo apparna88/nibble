@@ -1,0 +1,17 @@
+{
+  "name": "nibble",
+  "owner": {
+    "name": "Aparna Hariyani"
+  },
+  "metadata": {
+    "description": "Nibble: small, safe bites of change for repos you do not know. A five-step debugging loop that maps, scans, traces, fixes, and commits.",
+    "version": "1.1.0"
+  },
+  "plugins": [
+    {
+      "name": "nibble",
+      "source": ".",
+      "description": "Land in an unfamiliar repo and change it safely, one small bite at a time: map the code, scan for real defects, trace the root cause, make the smallest fix, commit it atomically. Language and agent agnostic."
+    }
+  ]
+}

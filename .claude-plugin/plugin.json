@@ -1,0 +1,17 @@
+{
+  "name": "nibble",
+  "version": "1.1.0",
+  "description": "Small, safe bites of change for repos you do not know. A five-step debugging loop: map, scan, trace, fix, commit. Language and agent agnostic.",
+  "author": {
+    "name": "Aparna Hariyani"
+  },
+  "keywords": [
+    "debugging",
+    "code-review",
+    "root-cause",
+    "minimal-fix",
+    "unfamiliar-repo",
+    "commit",
+    "workflow"
+  ]
+}
