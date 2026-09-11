@@ -2,6 +2,8 @@
 
 **Small, safe bites of change for repos you do not know.**
 
+<!-- DEMO: add a screen recording of the loop here, e.g. ![nibble demo](docs/demo.gif) -->
+
 You just landed in an unfamiliar codebase and something needs fixing. The temptation is to gulp: read everything, change a lot, hope the tests catch it. Nibble is the opposite habit. It takes one small, well-understood bite at a time, so you can ship a fix to code you do not own without breaking things you cannot see.
 
 It is not one skill. It is a loop of five, each doing one job and handing off to the next.
@@ -51,8 +53,8 @@ Without it, the scanner falls back to `ripgrep`, then to `grep`. Nothing else is
 Add the marketplace, then install:
 
 ```
-/plugin marketplace add <your-github-username>/nibble
-/plugin install nibble
+/plugin marketplace add apparna88/nibble
+/plugin install nibble@nibble
 ```
 
 ### As individual skills (any agent)
