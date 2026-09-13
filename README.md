@@ -18,6 +18,79 @@ It is not one skill. It is a loop of five, each doing one job and handing off to
 
 Run the whole loop, or reach for any one bite on its own.
 
+## Example: a real, open bug in valkey, in five bites
+
+This is **not** a replay of a known fix. The loop lands on the current `unstable` HEAD of [`valkey-io/valkey`](https://github.com/valkey-io/valkey) (a ~500-file C codebase) and fixes [issue #3483](https://github.com/valkey-io/valkey/issues/3483), a still-open input-validation bug (Coverity CID 901320) where `ZRANGEBYSCORE` accepts a bare `(` as a score. Every line below is real output from the built server.
+
+**Bite 1: nibble-map** orients in one pass:
+
+```
+Stack:       C, built with make. One binary: src/valkey-server.
+Commands:    build → make -j    test → ./runtest --single unit/type/zset
+Entry point: src/t_zset.c, ZRANGEBYSCORE / ZCOUNT via zslParseRange()
+```
+
+**Bite 2: nibble-scan** reviews `zslParseRange` and flags an inconsistent boundary: the general float parser (`string2d`) rejects empty input with a `slen == 0` guard, but this function rolls its own parse and omits it.
+
+```
+[reliability] t_zset.c:112  zslParseRange parses "(" as valkey_strtod_n(s+1, 0)
+  with no empty-length guard. A bare "(" (and "") is silently read as 0.0,
+  unlike every other float input in the server. Also a 0-length read (CID 901320).
+```
+
+**Bite 3: nibble-trace** proves it against the running HEAD server, no edits yet:
+
+```
+ZRANGEBYSCORE zs ( +inf   -> pos1 pos2       # a bare "(" ...
+ZRANGEBYSCORE zs (0 +inf  -> pos1 pos2       # ... is silently treated as "(0"
+ZRANGEBYSCORE zs '' +inf  -> zero pos1 pos2  # empty score parsed as 0.0
+RESULT: BUG - bare "(" silently accepted (issue #3483)
+```
+
+Root cause: `valkey_strtod_n(s + 1, len - 1, …)` on a lone `(` parses zero bytes, returns `0.0`, and the `eptr[0] != '\0'` check passes. Fix strategy: reject an empty numeric body, the same guard the robust path already has.
+
+**Bite 4: nibble-fix** adds the missing guard (4 lines in `src/t_zset.c`, applied to both the min and max branches):
+
+```diff
+ if (s[0] == '(') {
++    if (len < 2) return C_ERR; /* bare "(" with no score is not a float */
+     spec->min = valkey_strtod_n(s + 1, len - 1, &eptr);
+     if (eptr[0] != '\0' || isnan(spec->min)) return C_ERR;
+     spec->minex = 1;
+ } else {
++    if (len == 0) return C_ERR; /* empty score is not a float */
+     spec->min = valkey_strtod_n(s, len, &eptr);
+```
+
+Rebuild, rerun the exact same trigger, and confirm valid ranges are untouched:
+
+```
+ZRANGEBYSCORE zs ( +inf   -> ERR min or max is not a float   # rejected
+ZRANGEBYSCORE zs '' +inf  -> ERR min or max is not a float   # rejected
+ZRANGEBYSCORE zs (-1 (2    -> zero pos1                       # exclusive still works
+ZRANGEBYSCORE zs -inf +inf -> neg2 neg1 zero pos1 pos2        # normal range intact
+RESULT: bare "(" is REJECTED (fixed)
+```
+
+The guard closes the bug for every command that shares `zslParseRange` (ZCOUNT, ZRANGESTORE, …); no valid input changes behavior.
+
+**Bite 5: nibble-commit** records one atomic, self-documenting commit:
+
+```
+fix: reject a bare "(" score in zslParseRange (#3483)
+
+Root cause: zslParseRange parsed the score body with valkey_strtod_n but,
+unlike the server's general float parser, never guarded against an empty
+body, so "(" and "" were silently read as 0.0.
+Impact: ZRANGEBYSCORE / ZCOUNT / ZRANGESTORE returned wrong results for a
+malformed range with no error (Coverity CID 901320, a 0-length read).
+Fix: reject an empty numeric body in both the min and max branches.
+Backwards compatibility: preserved. Every valid inclusive/exclusive score
+parses exactly as before; only empty bodies are now refused.
+```
+
+Five bites: oriented in an unfamiliar C codebase, found a real open defect, proved it against the running HEAD server, fixed the cause, and wrote history that explains itself.
+
 ## Why it is different
 
 There are plenty of bug-finding and commit skills. Nibble is not another single tool competing with them. It is an opinionated **end-to-end habit** for working safely in code you did not write, with one idea running through every step: the best change is the smallest one that holds, and every extra line you touch is a new place to be wrong.
@@ -51,8 +124,8 @@ Without it, the scanner falls back to `ripgrep`, then to `grep`. Nothing else is
 Add the marketplace, then install:
 
 ```
-/plugin marketplace add <your-github-username>/nibble
-/plugin install nibble
+/plugin marketplace add apparna88/nibble
+/plugin install nibble@nibble
 ```
 
 ### As individual skills (any agent)
