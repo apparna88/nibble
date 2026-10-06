@@ -2,7 +2,7 @@
 #
 # nibble installer (any agent that reads Markdown skills).
 #
-# Copies the five nibble skills into your Claude Code skills directory
+# Copies the nibble skills into your Claude Code skills directory
 # (~/.claude/skills by default) and makes the scanner executable.
 # Read this script before running it. It only copies files; it installs nothing
 # system-wide and touches nothing outside the skills directory.
@@ -19,7 +19,7 @@ DEST="${SKILLS_DIR:-$HOME/.claude/skills}"
 echo "Installing nibble skills to: $DEST"
 mkdir -p "$DEST"
 
-for skill in nibble-map nibble-scan nibble-trace nibble-fix nibble-commit; do
+for skill in nibble-map nibble-scan nibble-trace nibble-fix nibble-plan nibble-build nibble-cover nibble-commit; do
   cp -r "$SRC/$skill" "$DEST/"
   echo "  installed $skill"
 done
