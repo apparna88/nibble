@@ -9,9 +9,9 @@ An optional second pass after `nibble-plan`. Check whether the proposed slice fi
 
 ## Procedure
 
-1. Read `.nibble/nibble-plan.md` in the target repository. If the user supplies a different plan path, review that file instead.
+1. Read `running-docs/nibble-plan.md` in the target repository. If the user supplies a different plan path, review that file instead.
 2. If the plan is missing or unreadable, set the verdict to **Revise**, record that the review could not be completed, and point to `nibble-plan` as the next step. Do not invent a plan to review.
-3. Check the plan against relevant repository evidence. Read only the files needed to assess its claims; reuse `.nibble/nibble-map.md` if available, then verify important paths and commands against the repo.
+3. Check the plan against relevant repository evidence. Read only the files needed to assess its claims; reuse `running-docs/nibble-map.md` if available, then verify important paths and commands against the repo.
 4. Review whether:
    - the feature outcome and scope are clear, and the slice delivers end-to-end behavior;
    - the chosen sibling is a good structural match and the proposed seam includes required layers and wiring;

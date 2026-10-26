@@ -16,7 +16,7 @@ Bite 3 of the Nibble loop. Narrow to one problem and find why it actually fails,
 
 ## Output
 
-Write the complete diagnosis and fix strategy to `.nibble/nibble-trace.md` at the target repository root, creating `.nibble/` if needed. Replace the previous trace report on each run. In the conversation, give the saved file path and a one-line status; do not repeat the full diagnosis.
+Write the complete diagnosis and fix strategy to `running-docs/nibble-trace.md` at the target repository root, creating `running-docs/` if needed. Replace the previous trace report on each run. In the conversation, give the saved file path and a one-line status; do not repeat the full diagnosis.
 
 - **Root cause:** one or two sentences.
 - **Fix strategy:** 1 to 3 lines, minimal by design.

@@ -25,7 +25,7 @@ Same slice discipline everywhere; wire it in the way the stack expects, for exam
 
 ## Output
 
-Write the complete build report to `.nibble/nibble-build.md` at the target repository root, creating `.nibble/` if needed. Replace the previous build report on each run. In the conversation, give the saved file path and a one-line status; do not repeat the full report.
+Write the complete build report to `running-docs/nibble-build.md` at the target repository root, creating `running-docs/` if needed. Replace the previous build report on each run. In the conversation, give the saved file path and a one-line status; do not repeat the full report.
 
 Report plainly:
 

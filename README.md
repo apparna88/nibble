@@ -34,19 +34,19 @@ Run a whole loop, or reach for any one bite on its own.
 
 ## Reviewable reports
 
-The skills save their full plans, findings, diagnoses, and verification results as Markdown files in a `.nibble/` directory at the target repository root. The optional plan review saves its feedback to `running-docs/nibble-plan-review.md`. Each run replaces that skill's previous report. The conversation gives you the file path and a short status, so the complete result is easy to review without scrolling through console output.
+The skills save their full plans, findings, diagnoses, and verification results as Markdown files in a `running-docs/` directory at the target repository root. The optional plan review saves its feedback to `running-docs/nibble-plan-review.md`. Each run replaces that skill's previous report. The conversation gives you the file path and a short status, so the complete result is easy to review without scrolling through console output.
 
 | Skill | Report file |
 |-------|-------------|
-| **nibble-map** | `.nibble/nibble-map.md` |
-| **nibble-scan** | `.nibble/nibble-scan.md` |
-| **nibble-trace** | `.nibble/nibble-trace.md` |
-| **nibble-fix** | `.nibble/nibble-fix.md` |
-| **nibble-plan** | `.nibble/nibble-plan.md` |
+| **nibble-map** | `running-docs/nibble-map.md` |
+| **nibble-scan** | `running-docs/nibble-scan.md` |
+| **nibble-trace** | `running-docs/nibble-trace.md` |
+| **nibble-fix** | `running-docs/nibble-fix.md` |
+| **nibble-plan** | `running-docs/nibble-plan.md` |
 | **nibble-plan-review** | `running-docs/nibble-plan-review.md` |
-| **nibble-build** | `.nibble/nibble-build.md` |
-| **nibble-cover** | `.nibble/nibble-cover.md` |
-| **nibble-debug** | `.nibble/nibble-debug.md` |
+| **nibble-build** | `running-docs/nibble-build.md` |
+| **nibble-cover** | `running-docs/nibble-cover.md` |
+| **nibble-debug** | `running-docs/nibble-debug.md` |
 
 The reports are regular files in the worktree. Code edits remain in their source files, where you can review the actual diff. `nibble-commit` records its structured explanation in the Git commit message.
 
@@ -54,7 +54,7 @@ The reports are regular files in the worktree. Code edits remain in their source
 
 This is **not** a replay of a known fix. The loop lands on the current `unstable` HEAD of [`valkey-io/valkey`](https://github.com/valkey-io/valkey) (a ~500-file C codebase) and fixes [issue #3483](https://github.com/valkey-io/valkey/issues/3483), a still-open input-validation bug (Coverity CID 901320) where `ZRANGEBYSCORE` accepts a bare `(` as a score. Every line below is real output from the built server.
 
-In the current version, the full reports for this fix loop are saved as `.nibble/nibble-map.md`, `.nibble/nibble-scan.md`, `.nibble/nibble-trace.md`, and `.nibble/nibble-fix.md`. The code change itself remains in `src/t_zset.c` for normal diff review.
+In the current version, the full reports for this fix loop are saved as `running-docs/nibble-map.md`, `running-docs/nibble-scan.md`, `running-docs/nibble-trace.md`, and `running-docs/nibble-fix.md`. The code change itself remains in `src/t_zset.c` for normal diff review.
 
 **Bite 1: nibble-map** orients in one pass:
 
@@ -129,7 +129,7 @@ Five bites: oriented in an unfamiliar C codebase, found a real open defect, prov
 
 The same habit, the other loop. This one lands in [`sindresorhus/dot-prop`](https://github.com/sindresorhus/dot-prop) (v10.2.0, a small ESM utility) and adds a genuinely missing function: `flatten`, the inverse of the library's existing `unflatten`. Every result below is real output from the project's own `ava`, `tsc`, and `xo`.
 
-The current build loop saves its reports as `.nibble/nibble-map.md`, `.nibble/nibble-plan.md`, `.nibble/nibble-build.md`, and `.nibble/nibble-cover.md`. If a test or built feature misbehaves, the diagnosis is saved separately in `.nibble/nibble-debug.md`.
+The current build loop saves its reports as `running-docs/nibble-map.md`, `running-docs/nibble-plan.md`, `running-docs/nibble-build.md`, and `running-docs/nibble-cover.md`. If a test or built feature misbehaves, the diagnosis is saved separately in `running-docs/nibble-debug.md`.
 
 **Bite 1: nibble-map** orients in one pass:
 

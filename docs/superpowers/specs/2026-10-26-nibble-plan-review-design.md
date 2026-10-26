@@ -19,7 +19,7 @@ Add a standalone skill that critiques a plan produced by `nibble-plan` before im
 
 ## Approach
 
-Add a standalone `nibble-plan-review` skill. It reads `.nibble/nibble-plan.md`, checks claims against relevant repository files, then writes a `Ready` or `Revise` verdict with evidence-based blockers and suggestions to `running-docs/nibble-plan-review.md` in the target repository. It replaces only its own previous report. Integrate the skill in the installer and README.
+Add a standalone `nibble-plan-review` skill. It reads `running-docs/nibble-plan.md`, checks claims against relevant repository files, then writes a `Ready` or `Revise` verdict with evidence-based blockers and suggestions to `running-docs/nibble-plan-review.md` in the target repository. It replaces only its own previous report. Integrate the skill in the installer and README.
 
 ## Constraints
 

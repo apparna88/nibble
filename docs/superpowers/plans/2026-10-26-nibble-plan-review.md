@@ -34,7 +34,7 @@
 - Create: `skills/nibble-plan-review/SKILL.md`
 
 **Interfaces:**
-- Consumes: `.nibble/nibble-plan.md` and relevant repository files named by or needed to assess the plan.
+- Consumes: `running-docs/nibble-plan.md` and relevant repository files named by or needed to assess the plan.
 - Produces: `running-docs/nibble-plan-review.md` with a `Ready` or `Revise` verdict and actionable, evidence-based feedback.
 
 - [x] Write the skill instructions, including the no-plan case, review criteria, evidence requirements, no-edit boundary, and overwrite behavior for its own report.

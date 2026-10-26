@@ -24,7 +24,7 @@ Use the stack's real runner and keep the loop fast, for example:
 
 ## Output
 
-Write the complete coverage report to `.nibble/nibble-cover.md` at the target repository root, creating `.nibble/` if needed. Replace the previous coverage report on each run. In the conversation, give the saved file path and a one-line status; do not repeat the full report.
+Write the complete coverage report to `running-docs/nibble-cover.md` at the target repository root, creating `running-docs/` if needed. Replace the previous coverage report on each run. In the conversation, give the saved file path and a one-line status; do not repeat the full report.
 
 - The test files added or extended, and what behavior each covers.
 - The exact commands run, and their result (tests, build, lint).
