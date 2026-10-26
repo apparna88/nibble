@@ -19,7 +19,7 @@ DEST="${SKILLS_DIR:-$HOME/.claude/skills}"
 echo "Installing nibble skills to: $DEST"
 mkdir -p "$DEST"
 
-for skill in nibble-map nibble-scan nibble-trace nibble-fix nibble-plan nibble-build nibble-cover nibble-debug nibble-commit; do
+for skill in nibble-map nibble-scan nibble-trace nibble-fix nibble-plan nibble-plan-review nibble-build nibble-cover nibble-debug nibble-commit; do
   cp -r "$SRC/$skill" "$DEST/"
   echo "  installed $skill"
 done

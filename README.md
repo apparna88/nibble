@@ -23,6 +23,7 @@ Both loops open with **nibble-map** and close with **nibble-commit**.
 | Bite | Skill | What it does |
 |------|-------|--------------|
 | 2 | **nibble-plan** | Find where the feature belongs, the existing feature to mirror, and the conventions to follow. Draft the smallest vertical slice. No code; stops for your approval. |
+| ↳ | **nibble-plan-review** | Optional second pass. Checks the plan against repository evidence and saves a Ready or Revise verdict with actionable feedback. Does not edit the plan. |
 | 3 | **nibble-build** | Implement that one slice to the repo's own conventions, wire it in (route, DI, navigation, manifest), and keep the tree compiling. |
 | 4 | **nibble-cover** | Add tests for the new behavior using the project's own framework, then run build, tests, and lint green. |
 | ↳ | **nibble-debug** | Escalation, not a linear step. When a built slice misbehaves or a test will not go green, diagnose the cause from the runtime's logs, then loop back to nibble-build. Diagnoses only; never commits. |
@@ -33,7 +34,7 @@ Run a whole loop, or reach for any one bite on its own.
 
 ## Reviewable reports
 
-The skills save their full plans, findings, diagnoses, and verification results as Markdown files in a `.nibble/` directory at the target repository root. Each run replaces that skill's previous report. The conversation gives you the file path and a short status, so the complete result is easy to review without scrolling through console output.
+The skills save their full plans, findings, diagnoses, and verification results as Markdown files in a `.nibble/` directory at the target repository root. The optional plan review saves its feedback to `running-docs/nibble-plan-review.md`. Each run replaces that skill's previous report. The conversation gives you the file path and a short status, so the complete result is easy to review without scrolling through console output.
 
 | Skill | Report file |
 |-------|-------------|
@@ -42,6 +43,7 @@ The skills save their full plans, findings, diagnoses, and verification results 
 | **nibble-trace** | `.nibble/nibble-trace.md` |
 | **nibble-fix** | `.nibble/nibble-fix.md` |
 | **nibble-plan** | `.nibble/nibble-plan.md` |
+| **nibble-plan-review** | `running-docs/nibble-plan-review.md` |
 | **nibble-build** | `.nibble/nibble-build.md` |
 | **nibble-cover** | `.nibble/nibble-cover.md` |
 | **nibble-debug** | `.nibble/nibble-debug.md` |
@@ -255,6 +257,7 @@ cp -r skills/nibble-scan   ~/.claude/skills/
 cp -r skills/nibble-trace  ~/.claude/skills/
 cp -r skills/nibble-fix    ~/.claude/skills/
 cp -r skills/nibble-plan   ~/.claude/skills/
+cp -r skills/nibble-plan-review ~/.claude/skills/
 cp -r skills/nibble-build  ~/.claude/skills/
 cp -r skills/nibble-cover  ~/.claude/skills/
 cp -r skills/nibble-debug  ~/.claude/skills/
@@ -289,6 +292,7 @@ nibble/
     ├── nibble-trace/SKILL.md
     ├── nibble-fix/SKILL.md
     ├── nibble-plan/SKILL.md
+    ├── nibble-plan-review/SKILL.md
     ├── nibble-build/SKILL.md
     ├── nibble-cover/SKILL.md
     ├── nibble-debug/SKILL.md
