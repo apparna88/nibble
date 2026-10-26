@@ -25,6 +25,7 @@ Both loops open with **nibble-map** and close with **nibble-commit**.
 | 2 | **nibble-plan** | Find where the feature belongs, the existing feature to mirror, and the conventions to follow. Draft the smallest vertical slice. No code; stops for your approval. |
 | 3 | **nibble-build** | Implement that one slice to the repo's own conventions, wire it in (route, DI, navigation, manifest), and keep the tree compiling. |
 | 4 | **nibble-cover** | Add tests for the new behavior using the project's own framework, then run build, tests, and lint green. |
+| ↳ | **nibble-debug** | Escalation, not a linear step. When a built slice misbehaves or a test will not go green, diagnose the cause from the runtime's logs, then loop back to nibble-build. Diagnoses only; never commits. |
 
 When a built slice compiles but behaves wrong, or a new test will not go green and reading the code does not show why, the build loop has one escalation bite: **nibble-debug** diagnoses the cause from the runtime's own logs (`adb logcat` and tombstones on Android, the equivalent for every other stack), adds the minimum temporary logging to confirm one hypothesis, then loops back to **nibble-build** with a root cause and removes its probes. It diagnoses; it never commits.
 
