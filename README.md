@@ -103,6 +103,85 @@ parses exactly as before; only empty bodies are now refused.
 
 Five bites: oriented in an unfamiliar C codebase, found a real open defect, proved it against the running HEAD server, fixed the cause, and wrote history that explains itself.
 
+## Example: adding a feature to dot-prop, in four bites
+
+The same habit, the other loop. This one lands in [`sindresorhus/dot-prop`](https://github.com/sindresorhus/dot-prop) (v10.2.0, a small ESM utility) and adds a genuinely missing function: `flatten`, the inverse of the library's existing `unflatten`. Every result below is real output from the project's own `ava`, `tsc`, and `xo`.
+
+**Bite 1: nibble-map** orients in one pass:
+
+```
+Stack:       Node (ESM), npm. One entry: index.js. Only dep is type-fest (types).
+Commands:    test → npm test (xo && ava && tsc)    unit → npx ava
+Entry point: index.js, named exports getProperty/setProperty/.../deepKeys/unflatten
+Tests:       ava, in test.js (77 passing at baseline)
+```
+
+**Bite 2: nibble-plan** finds the seam and the sibling to mirror, and writes no code:
+
+```
+Feature:     flatten(object): turn a nested object into a flat { 'a.b': value } map.
+Sibling:     unflatten(object), its exact inverse (index.js). Build on deepKeys + getProperty.
+Slice:       add flatten export in index.js; declare its type in index.d.ts; mirror
+             unflatten's tests in test.js.
+Conventions: named ESM export, JSDoc with an @example, ava tests beside the sibling's.
+Verify:      npx ava, then tsc, then xo.
+Deferred:    readme.md prose, benchmark entry.
+```
+
+**Bite 3: nibble-build** writes the one slice, reusing what the repo already has (`deepKeys` lists every leaf path, `getProperty` reads each), and wires it in as a named export plus a type declaration that mirrors `unflatten`:
+
+```diff
++export function flatten(object) {
++	const result = {};
++	if (!isObject(object)) {
++		return result;
++	}
++
++	for (const path of deepKeys(object)) {
++		result[path] = getProperty(object, path);
++	}
++
++	return result;
++}
+```
+
+**Bite 4: nibble-cover** mirrors `unflatten`'s tests and adds the round-trip that proves the two are inverses, then runs the project's own commands:
+
+```js
+test('flatten - round-trips with unflatten', t => {
+	const nested = {unicorn: {name: 'Rainbow Dash', treasures: ['sparkles', 'glitter']}};
+	t.deepEqual(unflatten(flatten(nested)), nested);
+});
+```
+
+```
+✔ flatten - nested object to dot paths
+✔ flatten - arrays and keys needing escaping
+✔ flatten - non-objects return an empty object
+✔ flatten - round-trips with unflatten
+81 tests passed        # was 77; +4 new, 0 regressions
+tsc: 0 errors          xo: 0 errors
+```
+
+If a new test had gone red here and reading the code did not show why, this is where **nibble-debug** steps in: reproduce the failing case, read the runtime's logs, add the minimum probe to pin the cause, then hand it back to nibble-build. It stayed green, so the loop goes straight to commit.
+
+**Bite 5: nibble-commit** lands one atomic slice:
+
+```
+add flatten, the inverse of unflatten
+
+- Motivation: the library could unflatten a dot-path map into a nested object
+  but had no way to go the other direction.
+- Impact: flatten(object) returns a flat { path: value } map whose keys read
+  back via getProperty; unflatten(flatten(x)) round-trips.
+- Strategy: reuse deepKeys to enumerate leaf paths and getProperty to read
+  each, mirroring unflatten's shape, export, and tests.
+- Backwards compatibility: preserved. Purely additive; no existing export or
+  behavior changes.
+```
+
+Four bites, one optional fifth: oriented in an unfamiliar library, mirrored an existing feature instead of inventing one, built the smallest slice that delivers real behavior, and proved it with the project's own suite, green.
+
 ## Why it is different
 
 There are plenty of bug-finding and commit skills. Nibble is not another single tool competing with them. It is an opinionated **end-to-end habit** for working safely in code you did not write, with one idea running through every step: the best change is the smallest one that holds, and every extra line you touch is a new place to be wrong.
