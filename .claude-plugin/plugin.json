@@ -1,7 +1,7 @@
 {
   "name": "nibble",
-  "version": "1.2.0",
-  "description": "Small, safe bites of change for repos you do not know. Two loops that share map and commit: fix (scan, trace, fix) and build (plan, build, cover). Language and agent agnostic, with first-class Android/Java/Kotlin support.",
+  "version": "1.3.0",
+  "description": "Small, safe bites of change for repos you do not know. Two loops that share map and commit: fix (scan, trace, fix) and build (plan, build, cover, with debug to diagnose a slice that misbehaves). Language and agent agnostic, with first-class Android/Java/Kotlin support.",
   "author": {
     "name": "Aparna Hariyani"
   },

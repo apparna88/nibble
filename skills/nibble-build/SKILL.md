@@ -14,7 +14,7 @@ Bite 3 of the Nibble build loop (map, plan, **build**, cover, commit). Build the
 3. Wire it in. A feature is not done when the code exists; it is done when it is reachable. Register the route/command/screen, add the dependency injection binding, update navigation, and add any manifest/config entry the sibling has. An unwired feature is dead code.
 4. Respect public contracts. Add new surface rather than changing existing signatures, exports, schemas, or behavior that other code depends on. If the slice genuinely requires a breaking change, stop and flag it.
 5. Declare dependencies the repo's way. If a new library is truly needed, add it through the existing manifest or version catalog and the lock file, matching the surrounding style. Prefer what is already present.
-6. Keep it compiling. Build after each meaningful step using the command from nibble-map, so the tree never drifts far from green. Leave testing to nibble-cover, but do not hand off a tree that does not build.
+6. Keep it compiling. Build after each meaningful step using the command from nibble-map, so the tree never drifts far from green. Leave testing to nibble-cover, but do not hand off a tree that does not build. If the slice compiles but behaves wrong at runtime and reading the code does not show why, escalate to nibble-debug to find the cause, then come back here to apply it.
 
 ## Language and framework notes
 

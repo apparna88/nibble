@@ -26,6 +26,8 @@ Both loops open with **nibble-map** and close with **nibble-commit**.
 | 3 | **nibble-build** | Implement that one slice to the repo's own conventions, wire it in (route, DI, navigation, manifest), and keep the tree compiling. |
 | 4 | **nibble-cover** | Add tests for the new behavior using the project's own framework, then run build, tests, and lint green. |
 
+When a built slice compiles but behaves wrong, or a new test will not go green and reading the code does not show why, the build loop has one escalation bite: **nibble-debug** diagnoses the cause from the runtime's own logs (`adb logcat` and tombstones on Android, the equivalent for every other stack), adds the minimum temporary logging to confirm one hypothesis, then loops back to **nibble-build** with a root cause and removes its probes. It diagnoses; it never commits.
+
 Run a whole loop, or reach for any one bite on its own.
 
 ## Example: a real, open bug in valkey, in five bites
@@ -115,7 +117,7 @@ There are plenty of bug-finding and commit skills. Nibble is not another single 
 
 **Any language.** The skills describe patterns, not syntax. nibble-scan reasons about trust boundaries, environment leakage, unsafe parsing, and dead logic, and translates each to whatever language is in front of it, with concrete examples spanning JavaScript, Python, Go, Java, and Rust. The feature loop (nibble-plan, nibble-build, nibble-cover) works the same way: it defines a slice and mirrors an existing feature's structure and wiring in whatever stack is in front of it. nibble-map detects the stack from whatever manifest is present and reads the real commands rather than guessing.
 
-**Including Android.** Java, Kotlin, and Android/Gradle are first-class. nibble-map reads the `gradlew` wrapper, version catalogs, and module layout and uses the project's real tasks (`assembleDebug`, `testDebugUnitTest`, `connectedAndroidTest`, `lint`/`ktlintCheck`/`detekt`); the feature loop mirrors the repo's own screen/`ViewModel`/repository split, DI (Hilt/Dagger), navigation, and `res/` + `AndroidManifest.xml` wiring.
+**Including Android.** Java, Kotlin, and Android/Gradle are first-class. nibble-map reads the `gradlew` wrapper, version catalogs, and module layout and uses the project's real tasks (`assembleDebug`, `testDebugUnitTest`, `connectedAndroidTest`, `lint`/`ktlintCheck`/`detekt`); the feature loop mirrors the repo's own screen/`ViewModel`/repository split, DI (Hilt/Dagger), navigation, and `res/` + `AndroidManifest.xml` wiring. When a built screen misbehaves on device, nibble-debug reads `adb logcat`, tombstones, and ANR traces to pin the cause before any further edit.
 
 **Any agent.** The skills are plain Markdown instructions with no tool-specific or model-specific assumptions. They work anywhere a coding agent can read a skill or rules file, including Claude Code and other assistants that accept Markdown skill files. Nothing in them depends on a particular model or vendor.
 
@@ -154,6 +156,7 @@ cp -r skills/nibble-fix    ~/.claude/skills/
 cp -r skills/nibble-plan   ~/.claude/skills/
 cp -r skills/nibble-build  ~/.claude/skills/
 cp -r skills/nibble-cover  ~/.claude/skills/
+cp -r skills/nibble-debug  ~/.claude/skills/
 cp -r skills/nibble-commit ~/.claude/skills/
 chmod +x ~/.claude/skills/nibble-scan/scan-repo.sh
 ```
@@ -187,6 +190,7 @@ nibble/
     ├── nibble-plan/SKILL.md
     ├── nibble-build/SKILL.md
     ├── nibble-cover/SKILL.md
+    ├── nibble-debug/SKILL.md
     └── nibble-commit/SKILL.md
 ```
 

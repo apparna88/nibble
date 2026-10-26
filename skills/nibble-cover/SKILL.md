@@ -12,7 +12,7 @@ Bite 4 of the Nibble build loop (map, plan, build, **cover**, commit). A feature
 1. Mirror the existing tests. Find the sibling feature's tests (located in nibble-map) and copy their framework, layout, naming, and helpers. Do not introduce a new test tool.
 2. Cover the new behavior, not the framework: the main success path, the one or two edge cases a caller will actually hit, and any contract the feature promises. Prefer a few meaningful tests over broad shallow ones.
 3. Test at the level the sibling does. Favor fast unit tests for logic; add a higher-level or integration test only where the sibling has one and the wiring is worth proving.
-4. Run the project's own commands from nibble-map: tests, then build, then lint if the project uses one. Fix the feature or the test until all pass. Do not weaken an assertion to go green.
+4. Run the project's own commands from nibble-map: tests, then build, then lint if the project uses one. Fix the feature or the test until all pass. Do not weaken an assertion to go green. If a new test fails and reading the feature does not show why, escalate to nibble-debug to pin the cause from the runtime's logs, then return here once nibble-build has applied it.
 5. Do not break existing tests. If the feature changed shared behavior, that is a signal from nibble-build to revisit, not a test to delete.
 
 ## Language and framework notes

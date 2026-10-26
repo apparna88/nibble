@@ -4,14 +4,14 @@
     "name": "Aparna Hariyani"
   },
   "metadata": {
-    "description": "Nibble: small, safe bites of change for repos you do not know. Two loops that share map and commit: fix (scan, trace, fix) and build (plan, build, cover).",
-    "version": "1.2.0"
+    "description": "Nibble: small, safe bites of change for repos you do not know. Two loops that share map and commit: fix (scan, trace, fix) and build (plan, build, cover, with debug to diagnose a slice that misbehaves).",
+    "version": "1.3.0"
   },
   "plugins": [
     {
       "name": "nibble",
       "source": ".",
-      "description": "Land in an unfamiliar repo and change it safely, one small bite at a time. Fix a bug: map, scan, trace, fix, commit. Or build a feature: map, plan, build, cover, commit. Language and agent agnostic, with first-class Android/Java/Kotlin support."
+      "description": "Land in an unfamiliar repo and change it safely, one small bite at a time. Fix a bug: map, scan, trace, fix, commit. Or build a feature: map, plan, build, cover, commit, with debug to diagnose a slice that misbehaves. Language and agent agnostic, with first-class Android/Java/Kotlin support."
     }
   ]
 }
