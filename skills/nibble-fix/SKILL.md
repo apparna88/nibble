@@ -20,3 +20,7 @@ Bite 4 of the Nibble loop. Make the change and nothing else. A small bite is saf
 - Prefer the change that touches the fewest lines and the fewest files.
 - If the minimal fix would break a public contract, stop and say so rather than widening the blast radius silently.
 - Hand off to nibble-commit.
+
+## Review file
+
+After the change and verification are complete, write a concise report to `.nibble/nibble-fix.md` at the target repository root, creating `.nibble/` if needed. Include the root cause, changed files and lines, the verification commands and results, and any unresolved limitation. Replace the previous fix report on each run. The actual source changes remain in their source files; the report makes the change and verification easy to review. In the conversation, give the report path and a brief status rather than repeating the full report.

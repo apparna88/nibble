@@ -31,6 +31,8 @@ Use the runtime's own observability; the method is identical, only the log sourc
 
 ## Output
 
+Write the complete diagnosis to `.nibble/nibble-debug.md` at the target repository root, creating `.nibble/` if needed. Replace the previous debug report on each run. In the conversation, give the saved file path and a one-line status; do not repeat the full diagnosis.
+
 - Expected versus observed, in one line each.
 - The deterministic repro (the command, request, or tap sequence).
 - The confirmed root cause and the layer it lives in (wiring, data, or logic).

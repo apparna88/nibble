@@ -32,6 +32,8 @@ These patterns recur across languages. Translate each to the language in front o
 
 ## Output format
 
+Write the complete scan results, including any deferred findings, to `.nibble/nibble-scan.md` at the target repository root, creating `.nibble/` if needed. If no defects are confirmed, say so in the file. Replace the previous scan report on each run. In the conversation, give the file path and a one-line status; do not repeat the full report.
+
 For each real defect:
 
 **[Severity: High | Medium | Low] file:line — [Category]**

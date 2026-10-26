@@ -26,6 +26,8 @@ The slice is defined the same way everywhere; only the seams differ. Mirror the 
 
 ## Output
 
+Write the complete plan to `.nibble/nibble-plan.md` at the target repository root, creating `.nibble/` if needed. Replace the previous plan on each run. In the conversation, give the saved file path and a one-line status; do not repeat the full plan.
+
 - **Feature:** one or two sentences.
 - **Sibling to mirror:** the existing file(s)/feature this one copies in shape.
 - **Slice:** the smallest end-to-end change, as a short ordered list of the files to add or touch and what each does.

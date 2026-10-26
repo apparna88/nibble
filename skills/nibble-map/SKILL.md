@@ -28,6 +28,8 @@ Bite 1 of both Nibble loops: the first step whether you are about to fix a bug (
 
 ## Output
 
+Write the complete map to `.nibble/nibble-map.md` at the target repository root, creating `.nibble/` if needed. Replace the previous map on each run. In the conversation, give the saved file path and a one-line status; do not repeat the full map.
+
 Report only these, tersely:
 
 - Stack: language, package manager, notable dependencies
